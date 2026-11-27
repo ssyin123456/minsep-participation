@@ -59,9 +59,9 @@
 \usepackage{url}
 \urlstyle{same}
 \graphicspath{{figs/}{../figs/}}
-% A2: insert the versioned archive URL (Zenodo version DOI or a GitHub
-% release tag plus commit hash) here; it is the only place to edit.
-\newcommand{\repourl}{\url{https://github.com/ShishuYin/minsep-participation/commits/v1.0.0}}
+% A2: versioned archive URL (Zenodo version DOI or a GitHub release tag).
+% This is the only place to edit the URL; Section 1 adds the commit hash.
+\newcommand{\repourl}{\url{https://github.com/ShishuYin/minsep-participation/releases/tag/V1.0.1}}
 
 \hypersetup{hidelinks}
 
@@ -167,7 +167,7 @@ covers $K>1$ clients per round (Corollary 3).
 
 \textbf{Organization.} Section~2 reviews related work, Section~3 defines the window chain and the three quantities, Section~4 states the main results and Section~5 proves them. Section~6 reports exact state-space iteration, simulation and labelled computational checks, and Section~7 states the scope and limitations. Appendices~A--B contain the Doeblin-type and tail-covariance bounds; Appendix~C contains the supplementary derivations and certificates.
 
-\textbf{Code and reproducibility.} Scripts, fixed seeds and configuration files are pinned at \repourl{} (tag v1.0.0, commit 0cc8ca4).
+\textbf{Code and reproducibility.} Scripts, fixed seeds and configuration files are pinned at \repourl{} (tag V1.0.1, commit 601a0c9).
 
 \textbf{Notation.} $[N]=\{1,\dots,N\}$; $(N)_R=N!/(N-R)!$; $\|\cdot\|_{\mathrm{TV}}=\frac12\|\cdot\|_1$. We write $p=(p_1,\dots,p_N)$ with $p_i>0$ and $\sum_i p_i=1$, $p_{\min}=\min_i p_i$, and $\zeta_R$ for the stationary distribution of $P_R$; expectations are taken in stationarity. Here $\mathbf{1}\{\cdot\}$ is an indicator, $\mathbf{1}$ in matrix products the all-ones vector, and $\mathbf{I}$ the identity. The letter $l$ is a mixing lag, $t$ a round index, $\eta$ a step size, and $\eta_R(t)$ the one-round marginal; $\hat\nu_{t,i}$ is the $i$-th empirical frequency and $\tilde\nu_t$ the notation of \citep{ref1}. For $R=1$ we write $\pi_i$ for $\pi_{1,i}$; in stationarity $\nu_R(j)=\zeta_R(\{w:w_R=j\})$ coincides with $\pi_{R,j}$. We write $L(R,N)=\ln4/|\ln\lambda_\star(R,N)|$, $\alpha_{\mathrm{lr}}$ for the FedAvg learning rate, $\gamma$ for the idle-round probability, and $C(q)$ for the total-variation prefactor of Section~5.9.
 Other symbols are defined where they first appear; Section~S.8 lists the
@@ -741,7 +741,7 @@ $R$ & $\rho$ & $t_{\mathrm{marg}}(0.25)$ & $t_{\mathrm{marg}}(0.10)$ & $t_{\math
 6 & 0.750 & 15 & 31 & 72 & $0.0574$ \\
 \bottomrule
 \end{tabular}
-\caption{One-round marginal $\eta_R(t)$ under uniform availability, $N=8$, from a deterministic worst-case initial window}
+\caption{One-round marginal $\eta_R(t)$ under uniform availability, $N=8$, from a deterministic worst-case initial window; $\rho=R/N$.}
 \label{table:II}
 \end{table}
 
@@ -781,13 +781,14 @@ $N$ & $R$ & $\lambda_\star$ & $L$ & $\tau_{\mathrm{mix}}$ & $R+L$ & $C(q)$ & $R+
 10 & 8 & 0.9690 & 43.95 & 63 & 51.95 & 1.575 & 66.36 \\
 \bottomrule
 \end{tabular}
-\caption{Exact total-variation prefactor certificate for Theorem 5. $L=\ln4/|\ln\lambda_\star|$, $C(q)=\sup_{s\geq1}d(R+s)/\lambda_\star^{s}$, and the last column is the upper bound \eqref{eq:e28}; $\tau_{\mathrm{mix}}$ is obtained by direct iteration of $P_R$.}
+\caption{Measured total-variation prefactor $C(q)$ for Theorem 5. $L=\ln4/|\ln\lambda_\star|$, $C(q)=\sup_{s\geq1}d(R+s)/\lambda_\star^{s}$, and the last column is the upper bound \eqref{eq:e28}; $\tau_{\mathrm{mix}}$ is obtained by direct iteration of $P_R$.}
 \label{table:III}
 \end{table}
 
-Table~\ref{table:III} tabulates the realized prefactor $C(q)$ for each
-chain, from which the bound \eqref{eq:e28} follows by definition. For
-small $R/N$ the $R+L$ column slightly overestimates $\tau_{\mathrm{mix}}$;
+Table~\ref{table:III} reports the measured magnitude of $C(q)$ for each
+chain; \eqref{eq:e28} holds by construction from the definition of $C(q)$,
+not as an inequality tested by the table.
+For small $R/N$ the $R+L$ column slightly overestimates $\tau_{\mathrm{mix}}$;
 for large $R/N$ it underestimates it, and the
 $\max\{0,\ln C(q)\}/|\ln\lambda_\star|$ term restores a valid upper bound
 on all 15 chains displayed (22 chains checked in total). $C(q)$ exceeds one
@@ -859,7 +860,7 @@ $N\ge100$; the criterion is the closed-form inequality of Theorem~3.
 \begin{figure}[!tp]
 \centering
 \includegraphics[width=\textwidth]{fig3.jpg}
-\caption{Aggregate asymptotic variance $\sum_i\sigma_i^2(R)$ for $N=100$: (a) red, long-tailed $p_i\propto i^{-1.5}$ Monte Carlo with error bars giving the range over the four checkpoints; blue dashed, uniform-availability closed form of Theorem 2 as a scale reference; red dotted, analytic $R=0$ calibration of the long-tailed model; (b) deviations of the four checkpoints from their mean, whose range supplies the error bars in (a).}
+\caption{Aggregate asymptotic variance $\sum_i\sigma_i^2(R)$ for $N=100$: (a) red, long-tailed $p_i\propto i^{-1.5}$ Monte Carlo with error bars giving the range over four checkpoints $t\in\{1500,2000,2500,3000\}$; blue dashed, uniform-availability closed form of Theorem 2 as a scale reference; red dotted, analytic $R=0$ calibration of the long-tailed model; (b) deviations of the four checkpoints from their mean, whose range supplies the error bars in (a).}
 \label{fig:3}
 \vspace{2pt}
 \includegraphics[width=\textwidth]{fig4.jpg}
@@ -965,8 +966,8 @@ error to the zero-frequency prediction against $\eta/(1-\lambda_\star)$.}
 \vspace{2pt}
 \includegraphics[width=\textwidth]{fig8.jpg}
 \caption{Real client profile. (a) $t\,\mathrm{tr\,Var}(\hat\nu_t)$ under
-the CIFAR-10 client profile; (b) squared bias transient with a $1/t$
-reference slope.}
+the CIFAR-10 client profile at $t\in\{1000,1500,1800,2000\}$; (b) squared
+bias transient with a $1/t$ reference slope.}
 \label{fig:8}
 \end{figure}
 
@@ -1019,13 +1020,14 @@ $R$ & measured & 95\% CI & Prop.~4 closed form \\
 \textbf{E5 --- real client profile.} A Dirichlet partition of CIFAR-10
 training labels over $N=100$ clients supplies $p_i\propto n_i$ (no image
 tensor is loaded and no model is trained). Fig.~\ref{fig:8}(a) reports
-$t\,\mathrm{tr\,Var}(\hat\nu_t)$ at four checkpoints and (b) the squared bias
+$t\,\mathrm{tr\,Var}(\hat\nu_t)$ at four checkpoints
+($t\in\{1000,1500,1800,2000\}$) and (b) the squared bias
 transient, which settles at the resolution of an independent estimate
 $\hat\pi_R$ of the stationary participation vector; the $1/t$ line is a
 reference slope.
 
-All figures and tables are regenerated from the versioned archive at \repourl
-by \texttt{make figures}. E5 uses $2\times10^{4}$
+All figures and tables are regenerated from the versioned release of
+Section~1 by \texttt{make figures}. E5 uses $2\times10^{4}$
 trajectories on the fixed seed recorded in \texttt{configs/default.yaml}.
 \label{sec:experiments}
 
@@ -1585,8 +1587,9 @@ collects three disjoint sets of exact certificates. Since $C(q)$ is
 by construction; Tables~3--4 report the measured magnitude of $C(q)$ and its
 comparison with $L$, not a test of the inequality.
 Table~\ref{tab:S7-pref} is an independent recomputation on $19$ chains
-($R>N/2$, $\alpha_0$ down to $1.6\times10^{-9}$, maximum $1.4817$ at
-$(N,R)=(10,8)$), and \texttt{check\_algebra.py} compares
+spanning the main, intermediate and tail regimes, including chains with
+$R>N/2$; $\alpha_0$ reaches $9.40\times10^{-8}$ and the largest prefactor
+is $1.4817$ at $(N,R)=(10,8)$. \texttt{check\_algebra.py} compares
 $\chi^2_1=A_c/\alpha_0-1$ against exact forward iteration on $22$ pairs.
 
 \begin{table}[htbp]
