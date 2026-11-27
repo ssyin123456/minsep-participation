@@ -9,7 +9,9 @@ authors:
     orcid: "https://orcid.org/0000-0002-4484-2379"
     affiliation: "Anhui University of Finance and Economics, Bengbu, China"
 year: 2026
+version: 1.0.0
 license: MIT
+repository-code: "https://github.com/ShishuYin/minsep-participation"
 keywords:
   - federated learning
   - Markov chain
@@ -23,4 +25,5 @@ preferred-citation:
     - family-names: Yin
       given-names: Shishu
   year: 2026
+version: 1.0.0
   status: in-preparation

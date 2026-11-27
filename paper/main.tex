@@ -7,7 +7,7 @@
 % The `preprint' option only removes the volume/submitted/published header
 % (supplied by the editors after acceptance); the layout is unchanged.
 %
-% The supplementary derivations are Appendix C, Sections S.2-S.9, placed
+% The supplementary derivations are Appendix C, Sections S.2-S.8, placed
 % after the conclusion and before the bibliography.
 % The eight figures are 600 dpi JPEGs (3600 x 1920 px) with physical
 % size 6.0 x 3.2 in, embedded 1:1 at width=\textwidth. Glyphs are
@@ -55,9 +55,13 @@
 \usepackage[T1]{fontenc}
 \usepackage{amsmath,amssymb,amsfonts}
 \usepackage{booktabs}
+\usepackage{longtable}   % S.8 symbol table may break across pages
 \usepackage{url}
 \urlstyle{same}
 \graphicspath{{figs/}{../figs/}}
+% A2: insert the versioned archive URL (Zenodo version DOI or a GitHub
+% release tag plus commit hash) here; it is the only place to edit.
+\newcommand{\repourl}{\url{https://github.com/ShishuYin/minsep-participation/commits/v1.0.0}}
 
 \hypersetup{hidelinks}
 
@@ -69,14 +73,22 @@
 \raggedbottom
 \setlength{\parskip}{0pt}
 \setlength{\textfloatsep}{6pt}
-\setlength{\floatsep}{6pt}
 \setlength{\intextsep}{6pt}
 \setlength{\abovedisplayskip}{5pt}
 \setlength{\belowdisplayskip}{5pt}
 \setlength{\abovedisplayshortskip}{2pt}
 \setlength{\belowdisplayshortskip}{2pt}
-% rev20: figures are [!t] again (float pages deferred all eight to the
-%        very end of the document); no float-page overrides are needed.
+% rev33: four pairs of figures share one float each (two images, two
+% captions, one figure environment). A single float is indivisible, so
+% each pair stays on one page. Each pair is placed immediately after the
+% first \ref to its first figure, and "!" forces placement there instead of
+% letting the tall floats accumulate until the document ends. No figure is
+% resized (the 9.5 pt type stays 9.5 pt) and jmlr2e.sty is untouched.
+\setcounter{topnumber}{2}
+\setcounter{totalnumber}{4}
+\renewcommand{\topfraction}{1.0}
+\renewcommand{\textfraction}{0.01}
+\setlength{\floatsep}{2pt}
 
 % Fast-compile build: relax line breaking to remove Overfull \hbox
 % warnings in long inline-math paragraphs. No content is changed.
@@ -109,8 +121,13 @@ ORCID: 0000-0002-4484-2379%
 }
 \maketitle
 \begin{abstract}%
-Minimum separation bars a selected client from the following $R$ rounds, inducing an $R$-th order Markov participation chain. We evaluate two time scales: the worst-case mixing time $\tau_{\mathrm{mix}}(R)$, governing burn-in, and the zero-frequency asymptotic variance $\sigma_i^2(R)$, governing estimation precision. For arbitrary positive conditional propensities and $2\leq R\leq N-2$, deterministic forgetting gives $\tau_{\mathrm{mix}}(R)\geq R$. Under uniform availability a companion-matrix reduction yields a degree-$R$ polynomial whose largest root modulus $\lambda_\star(R,N)$ governs both scales. This reduction also gives $\sigma_i^2(R)=(N-R)(N-R-1)/N^3$, decreasing in $R$ while $\tau_{\mathrm{mix}}$ increases. A covariance generating function gives the steady-state error of a constant-step-size linear estimator for $\eta\ll1-\lambda_\star$. For general non-uniform $p$ the stationary law follows from elementary symmetric polynomials, the boundary case $R=1$ has an explicit variance, and the aggregate variance splits into an explicit leading term and a Poisson-solve tail. Substituting $\tau_{\mathrm{mix}}$ into the finite-time bound of \citep{ref1} gives $\mathcal{O}([R+L]/t)$ on the main design regime and yields burn-in and step-size rules.
+Minimum separation bars a selected client from the following $R$ rounds, inducing an $R$-th order Markov participation chain. We evaluate two time scales: the worst-case mixing time $\tau_{\mathrm{mix}}(R)$, governing burn-in, and the zero-frequency asymptotic variance $\sigma_i^2(R)$, governing estimation precision. For arbitrary positive conditional propensities and $2\leq R\leq N-2$, deterministic forgetting gives $\tau_{\mathrm{mix}}(R)\geq R$. Under uniform availability a companion-matrix reduction yields a degree-$R$ polynomial whose largest root modulus $\lambda_\star(R,N)$ governs both scales. A finite-dimensional lumping gives $\tau_{\mathrm{mix}}(R)\leq R+L(R,N)+\max\{0,\ln C(q)\}/|\ln\lambda_\star|$, with $C(q)$ independent of $|\mathcal{S}_R|$. This reduction also gives $\sigma_i^2(R)=(N-R)(N-R-1)/N^3$, decreasing in $R$ while $\tau_{\mathrm{mix}}$ increases. A covariance generating function gives the steady-state error of a constant-step-size linear estimator for $\eta\ll1-\lambda_\star$. For general non-uniform $p$ the stationary law follows from elementary symmetric polynomials, the boundary case $R=1$ has an explicit variance, and the aggregate variance splits into an explicit leading term and a Poisson-solve tail. Substituting $\tau_{\mathrm{mix}}$ into the finite-time bound of \citep{ref1} gives $\mathcal{O}([R+L]/t)$ on the main design regime.
 \end{abstract}
+% JMLR format: keywords follow the abstract, exactly as in published JMLR
+% articles (e.g. Huang et al., JMLR 26 (2025) 1-61, p. 1). The official
+% jmlr2e.sty keywords environment supplies the bold "Keywords:" label,
+% 20 pt left/right inset and \small type; five comma-separated terms, no
+% final period. Do not replace this with a hand-written macro.
 \begin{keywords}
 Markov chain mixing time, minimum-separation client sampling, federated learning, asymptotic sampling variance, non-reversible Markov chain spectra
 \end{keywords}
@@ -147,12 +164,13 @@ covers $K>1$ clients per round (Corollary 3).
 \item A finite-dimensional lumping gives a total-variation prefactor $C(q)$ independent of $|\mathcal{S}_R|=(N)_R$ and $\tau_{\mathrm{mix}}(R)\leq R+L(R,N)+\max\{0,\ln C(q)\}/|\ln\lambda_\star|$ (Theorem 5). Substituting into the finite-time bound \citep[Lemma~2]{ref1} gives $\mathcal{O}([R+L]/t)$ and a burn-in and step-size rule (Theorem 6). On $R\lesssim\sqrt{N/2}$ this sharpens to $\tau_{\mathrm{mix}}(R)=R+O(1)$ (Theorem~7); the idle-round variance is Corollary 4.
 \item For general $p$ and every $R$, the stationary window distribution and client marginal have closed forms in elementary symmetric polynomials, and the aggregate asymptotic variance decomposes into an explicit leading term and a covariance tail \eqref{eq:e26} (Proposition 5).
 \end{itemize}
+
 \textbf{Organization.} Section~2 reviews related work, Section~3 defines the window chain and the three quantities, Section~4 states the main results and Section~5 proves them. Section~6 reports exact state-space iteration, simulation and labelled computational checks, and Section~7 states the scope and limitations. Appendices~A--B contain the Doeblin-type and tail-covariance bounds; Appendix~C contains the supplementary derivations and certificates.
 
-\textbf{Code and reproducibility.} The experiment scripts, fixed random seeds and configuration files are supplied as a public release archive (URL in the cover letter); Section~S.8 lists the scripts, and \texttt{make check}, \texttt{make verify} and \texttt{make figures} reproduce every figure and table from \texttt{configs/default.yaml} and one fixed seed.
+\textbf{Code and reproducibility.} Scripts, fixed seeds and configuration files are pinned at \repourl{} (tag v1.0.0, commit 0cc8ca4).
 
 \textbf{Notation.} $[N]=\{1,\dots,N\}$; $(N)_R=N!/(N-R)!$; $\|\cdot\|_{\mathrm{TV}}=\frac12\|\cdot\|_1$. We write $p=(p_1,\dots,p_N)$ with $p_i>0$ and $\sum_i p_i=1$, $p_{\min}=\min_i p_i$, and $\zeta_R$ for the stationary distribution of $P_R$; expectations are taken in stationarity. Here $\mathbf{1}\{\cdot\}$ is an indicator, $\mathbf{1}$ in matrix products the all-ones vector, and $\mathbf{I}$ the identity. The letter $l$ is a mixing lag, $t$ a round index, $\eta$ a step size, and $\eta_R(t)$ the one-round marginal; $\hat\nu_{t,i}$ is the $i$-th empirical frequency and $\tilde\nu_t$ the notation of \citep{ref1}. For $R=1$ we write $\pi_i$ for $\pi_{1,i}$; in stationarity $\nu_R(j)=\zeta_R(\{w:w_R=j\})$ coincides with $\pi_{R,j}$. We write $L(R,N)=\ln4/|\ln\lambda_\star(R,N)|$, $\alpha_{\mathrm{lr}}$ for the FedAvg learning rate, $\gamma$ for the idle-round probability, and $C(q)$ for the total-variation prefactor of Section~5.9.
-Other symbols are defined where they first appear; Section~S.9 lists the
+Other symbols are defined where they first appear; Section~S.8 lists the
 supplementary notation.
 
 \section{Related Work}
@@ -426,7 +444,7 @@ of the finite-time bound become explicit functions of $(R,N,K,T)$ once
 Theorem~5 is substituted. On the main design regime of Theorem~7 the prefactor term can be dropped and the bound is $\mathcal{O}([R+L]/t)$.
 \label{thm:substitute}
 
-\textbf{Theorem 7.} Let $p_i\equiv1/N$, $m=N-R$, $\alpha_0=m^R/(N)_R$ and $A_c=(1-1/m)^{R+1}+1/m<1$. Write $h_0=\alpha_0^{-1}\mathbf{1}\{\mathcal{R}\}$ for the Radon--Nikodym derivative of the $R$-step law, $q^*$ for the $\pi$-adjoint of the lumped chain, and $\chi^2_s=\|(q^*)^s(h_0-1)\|_{L^2(\pi)}^2$. Then $\chi^2_0=\alpha_0^{-1}-1$, $\chi^2_1=A_c\alpha_0^{-1}-1$, and $\chi^2_s$ is nonincreasing in $s$; consequently $d(R+s)\le\tfrac12\sqrt{\chi^2_s}\le\tfrac12\sqrt{\chi^2_1}$ for all $s\geq1$. If $\chi^2_1\leq1/4$ then $\tau_{\mathrm{mix}}(R)\leq R+1$, and Theorem~1 gives $R\leq\tau_{\mathrm{mix}}(R)\leq R+1$. The condition holds for $m\gtrsim2R^2$, i.e.\ $R\lesssim\sqrt{N/2}$: the exact minimal $m$ is $5,12,25,65,198,1939$ at $R=2,3,4,6,10,30$. An independent maximal-coupling bound, proved in Section~5.9 and Section~S.5, gives $\tau_{\mathrm{mix}}(R)\leq2R$ whenever $m\geq4R^2$.
+\textbf{Theorem 7.} Let $p_i\equiv1/N$, $m=N-R$, $\alpha_0=m^R/(N)_R$ and $A_c=(1-1/m)^{R+1}+1/m<1$. Write $h_0=\alpha_0^{-1}\mathbf{1}\{\mathcal{A}\}$ for the Radon--Nikodym derivative of the $R$-step law, $q^*$ for the $\pi$-adjoint of the lumped chain, and $\chi^2_s=\|(q^*)^s(h_0-1)\|_{L^2(\pi)}^2$. Then $\chi^2_0=\alpha_0^{-1}-1$, $\chi^2_1=A_c\alpha_0^{-1}-1$, and $\chi^2_s$ is nonincreasing in $s$; consequently $d(R+s)\le\tfrac12\sqrt{\chi^2_s}\le\tfrac12\sqrt{\chi^2_1}$ for all $s\geq1$. If $\chi^2_1\leq1/4$ then $\tau_{\mathrm{mix}}(R)\leq R+1$, and Theorem~1 gives $R\leq\tau_{\mathrm{mix}}(R)\leq R+1$. The condition holds for $m\gtrsim2R^2$, i.e.\ $R\lesssim\sqrt{N/2}$: the exact minimal $m$ is $5,12,25,65,198,1939$ at $R=2,3,4,6,10,30$. An independent maximal-coupling bound, proved in Section~5.9 and Section~S.5, gives $\tau_{\mathrm{mix}}(R)\leq2R$ whenever $m\geq4R^2$.
 
 \subsection{Idle rounds}
 Model an idle round as a frozen window, i.e.\ a self-loop of probability
@@ -617,12 +635,12 @@ $C(q)\lambda_\star^{s}\leq1/4$ gives
 $s\geq\ln(4C(q))/|\ln\lambda_\star|$. Since also $s\geq0$, a valid bound is $s\geq L+\max\{0,\ln C(q)\}/|\ln\lambda_\star|$, which gives \eqref{eq:e28}; for $C(q)<1$ this reduces to $s\geq L$.
 
 \textbf{Proof of Theorem 7.} After $R$ steps the law is
-$\mu_R=\pi|_{\mathcal{R}}/\alpha_0$ with $\alpha_0=(N-R)^R/(N)_R$. Its one-step
+$\mu_R=\pi|_{\mathcal{A}}/\alpha_0$ with $\alpha_0=(N-R)^R/(N)_R$. Its one-step
 Radon--Nikodym derivative is
 $\rho(y)=(N-2R+k_y)\mathbf{1}\{y\in\mathcal{B}\}/m$, where $k_y$ counts the initial
-labels retained in $y$ and $\mathcal{B}$ is the state set of Proposition~\ref{prop:rho}
-(Section~S.5); only
-one predecessor of each $y\in\mathcal{B}$ lies in $\mathcal{R}$. With
+labels retained in $y$ and $\mathcal{B}$ is the state set of Proposition~\ref{prop:rho};
+only
+one predecessor of each $y\in\mathcal{B}$ lies in $\mathcal{A}$. With
 $T_j:=\sum_{y\in\mathcal{B}}(m)_{R-k_y+j}=(m)_{j-1}(m-j+1)^{R+1}$ one obtains
 $\mathbb{E}_\pi[\rho^2]=(T_2+T_1)/(m^2(N)_R)$, hence
 $\chi^2_0=\alpha_0^{-1}-1$ and
@@ -690,6 +708,7 @@ $N$ & $R$ & $\sigma_1^2$, Poisson solve & Theorem 2 & $|\mathrm{difference}|$ \\
 \caption{Asymptotic variance $\sigma_1^2(R)$ under uniform availability $p_i=1/N$: Poisson-equation solve versus Theorem 2}
 \label{table:I}
 \end{table}
+
 Table~\ref{table:I} agrees with Theorem 2 to machine precision, including
 $R=N-2$. Direct iteration of $P_R$ gives, for $N=10$,
 $\tau_{\mathrm{mix}}(R)=1,1,3,5,7,10,15$ at $R=0,\dots,6$, each satisfying
@@ -725,6 +744,7 @@ $R$ & $\rho$ & $t_{\mathrm{marg}}(0.25)$ & $t_{\mathrm{marg}}(0.10)$ & $t_{\math
 \caption{One-round marginal $\eta_R(t)$ under uniform availability, $N=8$, from a deterministic worst-case initial window}
 \label{table:II}
 \end{table}
+
 Table~\ref{table:II} checks Proposition 2: for $N=8$ every computed
 value satisfies the bound for $1\le t\le R$ and every
 $t_{\mathrm{marg}}(\epsilon)$ increases with $R$. The last column is the negative slope of
@@ -764,6 +784,7 @@ $N$ & $R$ & $\lambda_\star$ & $L$ & $\tau_{\mathrm{mix}}$ & $R+L$ & $C(q)$ & $R+
 \caption{Exact total-variation prefactor certificate for Theorem 5. $L=\ln4/|\ln\lambda_\star|$, $C(q)=\sup_{s\geq1}d(R+s)/\lambda_\star^{s}$, and the last column is the upper bound \eqref{eq:e28}; $\tau_{\mathrm{mix}}$ is obtained by direct iteration of $P_R$.}
 \label{table:III}
 \end{table}
+
 Table~\ref{table:III} tabulates the realized prefactor $C(q)$ for each
 chain, from which the bound \eqref{eq:e28} follows by definition. For
 small $R/N$ the $R+L$ column slightly overestimates $\tau_{\mathrm{mix}}$;
@@ -787,7 +808,12 @@ scalar estimator of Section~3.2.
 \includegraphics[width=\textwidth]{fig1.jpg}
 \caption{Uniform availability with $N=20$ and $4000$ trajectories: (a) bias of the expected empirical frequency and (b) $t\,\mathrm{tr}\,\mathrm{Var}(\hat\nu_t)$ converging to $\sum_i\sigma_i^2(R)$ of Theorem 2 (dotted lines).}
 \label{fig:1}
+\vspace{2pt}
+\includegraphics[width=\textwidth]{fig2.jpg}
+\caption{Quadratic estimation error for $4000$ trajectories: (a) mean squared error versus round; (b) values at $t=11,20,40,1200$ on a logarithmic scale, with error bars of one standard deviation across trajectories.}
+\label{fig:2}
 \end{figure}
+
 Fig.~\ref{fig:1}(a) shows $\|\mathbb{E}\hat\nu_t-\pi_R\|_{\mathrm{TV}}$,
 whose value $R/N$ at $t=1$ is a deterministic-initialization artifact; for
 $R=16$ it stays above $0.1$ until $t\approx17$. Panel (b) shows
@@ -797,12 +823,6 @@ agree with Theorem 2 to within $5\%$, the largest deviation at $R=16$ being
 transient bias rather than Monte Carlo error. No burn-in is applied here;
 Fig.~\ref{fig:2}(b) error bars are one standard deviation.
 
-\begin{figure}[!t]
-\centering
-\includegraphics[width=\textwidth]{fig2.jpg}
-\caption{Quadratic estimation error for $4000$ trajectories: (a) mean squared error versus round; (b) values at $t=11,20,40,1200$ on a logarithmic scale, with error bars of one standard deviation across trajectories.}
-\label{fig:2}
-\end{figure}
 Consider $N$ sensor nodes, node $k$ holding a vector observation $b_k\sim\mathcal{N}(0,\mathbf{I}_5)$, and a fusion center that at each round receives $b_{X_t}$ from the single admissible node and updates $w_{t+1}=(1-\eta)w_t+\eta b_{X_t}$ with $\eta=0.04$. Under uniform availability the stationary mean $\sum_i\pi_{R,i}b_i=N^{-1}\sum_k b_k$ is the population mean to be estimated, and $\mathbb{E}\|w_t-b_{\mathrm{avg}}\|^{2}$ is the steady-state estimation MSE; Proposition 3 gives it as an exponentially weighted covariance sum.
 
 Fig.~\ref{fig:2} shows the steady-state error decreasing from
@@ -836,18 +856,17 @@ $20000$ Dirichlet$(\alpha_{\mathrm{Dir}})$ profiles the increase fraction is $17
 $N=5,\alpha_{\mathrm{Dir}}=0.2$, $0.56\%$ at $N=5,\alpha_{\mathrm{Dir}}=1$, and below $0.01\%$ for
 $N\ge100$; the criterion is the closed-form inequality of Theorem~3.
 
-\begin{figure}[!t]
+\begin{figure}[!tp]
 \centering
 \includegraphics[width=\textwidth]{fig3.jpg}
 \caption{Aggregate asymptotic variance $\sum_i\sigma_i^2(R)$ for $N=100$: (a) red, long-tailed $p_i\propto i^{-1.5}$ Monte Carlo with error bars giving the range over the four checkpoints; blue dashed, uniform-availability closed form of Theorem 2 as a scale reference; red dotted, analytic $R=0$ calibration of the long-tailed model; (b) deviations of the four checkpoints from their mean, whose range supplies the error bars in (a).}
 \label{fig:3}
-\end{figure}
-\begin{figure}[!t]
-\centering
+\vspace{2pt}
 \includegraphics[width=\textwidth]{fig4.jpg}
 \caption{Small-$\rho$ regime: (a) at $N=100$, the variance ratio of Theorem 2, the measured steady-state estimation-error ratio, and the asymptotic line $1-2\rho$; (b) the analytic variance reduction $100(1-\sum_i\sigma_i^2(R)/\sum_i\sigma_i^2(0))$ against population size $N$ for $R=1,10$, with the analytic values quoted in the text shown as markers.}
 \label{fig:4}
 \end{figure}
+
 The magnitude of the effect depends on $\rho=R/N$. At $N=100$, $T=1200$, $2000$ trajectories and $\rho\in\{0,0.01,0.02,0.05,0.10\}$, the Theorem 2 variance ratio follows $1-2\rho$ to within about one percent, whereas the measured steady-state error ratio is about seven percent above it at $\rho=0.10$ (Fig.~\ref{fig:4}). At $N=10^{5},R=10$ the closed form gives a relative variance reduction of $0.0200\%$, and $0.0020\%$ at $R=1$.
 
 \subsection{Spectral Certificates and Design Rules}
@@ -859,7 +878,7 @@ and \eqref{eq:e28}; every row has slack, and $\tau_{\mathrm{mix}}\ge R$ is
 attained for $R\le6$. Fig.~\ref{fig:5}(a) gives the fully exact $N=10$ case;
 panel (b) extends to the provable bound and $R+L$ for larger $R$.
 
-\begin{figure}[!t]
+\begin{figure}[!tp]
 \centering
 \includegraphics[width=\textwidth]{fig5.jpg}
 \caption{One polynomial root drives two time scales in opposite directions.
@@ -869,7 +888,17 @@ $\tau_{\mathrm{mix}}$ for $R\leq7$ and the provable lower bound plus the
 leading term $R+L$ (left axis, log) for larger $R$; $\tau_{\mathrm{int}}(R)$
 (right axis, linear) is the closed form of Theorem 2.}
 \label{fig:5}
+\vspace{2pt}
+\includegraphics[width=\textwidth]{fig6.jpg}
+\caption{(a) Step-size rule from Theorem 6 versus a constant-$\tau_{\mathrm{mix}}$
+baseline and a schematic of the decreasing-$\tau_{\mathrm{mix}}$ conjecture in
+\protect\citep[App.~H]{ref1}. (b) Empirical concentration on a $1/t$ slope; the kink
+of $R=16$ near $t\approx70$ is the transient caused by the deterministic cooldown release,
+not sampling noise. The magnitude falls with $R$, for which $R+L$ equals $1.0$, $6.2$,
+$14.5$, $77.1$ at $R=0,4,8,16$, respectively.}
+\label{fig:6}
 \end{figure}
+
 \begin{table}[!t]
 \small
 \centering
@@ -890,6 +919,7 @@ $R$ & $\lambda_\star$ & $L$ & $\tau_{\mathrm{mix}}$ & $R+L$ & $C(q)$ & upper \\
 $C(q)=\sup_{s\geq1}d(R+s)/\lambda_\star^{s}$; the last column is \eqref{eq:e28}.}
 \label{table:IV}
 \end{table}
+
 \textbf{E2 --- step size and burn-in.} Theorem~6 makes
 $\alpha_{\mathrm{lr}}=\widetilde{\mathcal{O}}(1/(\tau_{\mathrm{mix}}K\sqrt T))$
 and $T>2\tau_{\mathrm{mix}}\log\tau_{\mathrm{mix}}$ explicit in $R$. With
@@ -903,17 +933,6 @@ trend conjectured in \citep[App.~H]{ref1}, shown for visual comparison only
 and not used in any bound. Panel (b) uses $1000$ trajectories to display the
 $1/t$ decay.
 
-\begin{figure}[!t]
-\centering
-\includegraphics[width=\textwidth]{fig6.jpg}
-\caption{(a) Step-size rule from Theorem 6 versus a constant-$\tau_{\mathrm{mix}}$
-baseline and a schematic of the decreasing-$\tau_{\mathrm{mix}}$ conjecture in
-\protect\citep[App.~H]{ref1}. (b) Empirical concentration on a $1/t$ slope; the kink
-of $R=16$ near $t\approx70$ is the transient caused by the deterministic cooldown release,
-not sampling noise. The magnitude falls with $R$, for which $R+L$ equals $1.0$, $6.2$,
-$14.5$, $77.1$ at $R=0,4,8,16$, respectively.}
-\label{fig:6}
-\end{figure}
 \textbf{Remark 7.} In Fig.~\ref{fig:6}(b),
 $t\,\mathbb{E}\|\hat\nu_t-\pi_R\|_\infty^{2}$ equals $0.228$, $0.149$,
 $0.080$, $0.0078$ at $R=0,4,8,16$ and decreases with $R$, following
@@ -934,7 +953,7 @@ $\Theta(\eta)$ exceeds the distance to the nearest covariance
 singularity, so the zero-frequency constant $0.0021$ is replaced by the full closed form
 $0.0117$, a factor of about $5$.
 
-\begin{figure}[!t]
+\begin{figure}[!tp]
 \centering
 \includegraphics[width=\textwidth]{fig7.jpg}
 \caption{Proposition 4 at finite step size. (a) Closed form (lines) versus the
@@ -943,7 +962,14 @@ levels (dotted) and the boundaries $\eta=1-\lambda_\star$ (dashed); the star
 marks $0.168944$ at $(N,R,\eta)=(20,16,0.04)$. (b) Ratio of the finite-$\eta$
 error to the zero-frequency prediction against $\eta/(1-\lambda_\star)$.}
 \label{fig:7}
+\vspace{2pt}
+\includegraphics[width=\textwidth]{fig8.jpg}
+\caption{Real client profile. (a) $t\,\mathrm{tr\,Var}(\hat\nu_t)$ under
+the CIFAR-10 client profile; (b) squared bias transient with a $1/t$
+reference slope.}
+\label{fig:8}
 \end{figure}
+
 \textbf{E4a --- the $R=1$ aggregate criterion.} Theorem~3 gives a
 closed-form inequality for whether the aggregate sampling variance
 $\sum_i\sigma_i^2(R)$ increases from $R=0$ to $R=1$. On 36 random
@@ -989,6 +1015,7 @@ $R$ & measured & 95\% CI & Prop.~4 closed form \\
 \caption{Bootstrap validation of the Proposition 4 closed form at $10^5$ trajectories ($B_{\mathrm{boot}}=2000$): steady-state quadratic error of Fig.~\ref{fig:2}(b) with 95\% confidence intervals.}
 \label{table:V}
 \end{table}
+
 \textbf{E5 --- real client profile.} A Dirichlet partition of CIFAR-10
 training labels over $N=100$ clients supplies $p_i\propto n_i$ (no image
 tensor is loaded and no model is trained). Fig.~\ref{fig:8}(a) reports
@@ -997,18 +1024,9 @@ transient, which settles at the resolution of an independent estimate
 $\hat\pi_R$ of the stationary participation vector; the $1/t$ line is a
 reference slope.
 
-\begin{figure}[!t]
-\centering
-\includegraphics[width=\textwidth]{fig8.jpg}
-\caption{Real client profile. (a) $t\,\mathrm{tr\,Var}(\hat\nu_t)$ under
-the CIFAR-10 client profile; (b) squared bias transient with a $1/t$
-reference slope.}
-\label{fig:8}
-\end{figure}
-
-All figures and tables are reproduced by the public release scripts, seeds
-and configuration files described in Section~1; E5 uses $2\times10^{4}$
-trajectories on that fixed seed.
+All figures and tables are regenerated from the versioned archive at \repourl
+by \texttt{make figures}. E5 uses $2\times10^{4}$
+trajectories on the fixed seed recorded in \texttt{configs/default.yaml}.
 \label{sec:experiments}
 
 \section{Conclusion}
@@ -1051,6 +1069,7 @@ prefactor independent of $(N,R)$, equivalently
 $\tau_{\mathrm{mix}}=R+O(L)$ with an absolute constant, is open, and the
 chi-square version is false in the tail regime.
 \end{itemize}
+
 \acks{This work received no external funding. The author declares no competing interests.}
 
 \appendix
@@ -1086,7 +1105,7 @@ $p_{\min}^{-2R}$ grows exponentially in $R$.
 \setcounter{subsection}{1}
 \renewcommand{\thesubsection}{S.\arabic{subsection}}
 
-\noindent This appendix supplies the derivations and numerical
+This appendix supplies the derivations and numerical
 certificates referred to above, for uniform availability $p_i\equiv1/N$ and
 $1\le R\le N-2$ ($R=N-1$ is periodic and excluded). Write $m=N-R$,
 \begin{equation}\label{eq:SR-p}
@@ -1096,13 +1115,12 @@ p_R(\lambda)=m\lambda^{R}+\lambda^{R-1}+\cdots+1,\qquad
 with $z_1,\dots,z_R$ the roots of $p_R$ and $\alpha_0=m^R/(N)_R$; equation
 numbering continues from the main text.
 
-\noindent\textbf{Status of the material.} Sections~S.2--S.4 are proofs
+\textbf{Status of the material.} Sections~S.2--S.4 are proofs
 (strong lumpability; the spectral filtration with its semisimplicity
 argument; the Gelfand bound). Section~S.5 proves Theorem~7 with exact
 rational certificates, Section~S.6 records the complex-valued TV duality,
 Section~S.7 contains certificates and one open conjecture
-(Conjecture~\ref{conj:G}), Section~S.8 lists the scripts, and Section~S.9
-is a symbol table.
+(Conjecture~\ref{conj:G}), and Section~S.8 is a symbol table.
 
 % ---------------------------------------------------------------------
 \subsection{Strong lumpability and basic spectral facts}
@@ -1175,7 +1193,7 @@ forcing $|\lambda|=1$ and $\lambda^{R}=1$, hence $\lambda=1$; but
 $p_R(1)=N\ne0$.
 \end{proof}
 
-\noindent\textbf{Certificate.} For $(N,R)=(6,2),(8,3)$, direct iteration of
+\textbf{Certificate.} For $(N,R)=(6,2),(8,3)$, direct iteration of
 the full $(N)_R$-dimensional $P_R$ and of $q$ agree in
 \eqref{eq:S2-tv} to $4.4\times10^{-16}$ for all $t\le R+6$
 (\texttt{check\_spectral.py}).
@@ -1185,9 +1203,9 @@ the full $(N)_R$-dimensional $P_R$ and of $q$ agree in
 \label{sec:S3}
 % ---------------------------------------------------------------------
 
-Let $\mathcal A$ be the algebra of functions on $\mathcal S_R$ generated by
+Let $\mathcal{F}$ be the algebra of functions on $\mathcal S_R$ generated by
 the coordinate indicators $u_{k,a}(w)=\mathbf{1}\{w_k=a\}$, $1\le k\le R$,
-$a\in[N]$. Let $V_{\le j}\subset\mathcal A$ be spanned by products of at
+$a\in[N]$. Let $V_{\le j}\subset\mathcal{F}$ be spanned by products of at
 most $j$ such indicators. Because the draw is uniform on the complement,
 \begin{equation}\label{eq:S3-cond}
 \mathbb E\big[\,\mathbf{1}\{X_1=a\}\mid Y_0=w\,\big]
@@ -1244,16 +1262,21 @@ $\le\lambda_\star$, and those of modulus exactly $\lambda_\star$ lie in the comp
 the $R$ distinct roots of $p_R$, each with multiplicity. Lemma~\ref{lem:squarefree}
 therefore diagonalises the $R\times R$ companion matrix $B^\top$ but does not
 by itself exclude Jordan chains of $q$ at modulus $\lambda_\star$. To rule them out,
-let $\mathcal{G}=\mathfrak{S}_{N-R}$ permute the labels outside the current window. Both $P_R$ and
+let $\mathcal{G}=\mathfrak{S}_{m}$ act on the labels outside the initial window $a_0$, as in Lemma~\ref{lem:A}. Both $P_R$ and
 the lumping projection are $\mathcal{G}$-equivariant, so the filtration $(V_{\le j})_j$
 of Proposition~\ref{prop:filtration} consists of $\mathcal{G}$-submodules. Over a field
 of characteristic zero and for finite $\mathcal{G}$, Maschke's theorem makes each
 $V_{\le j}$ completely reducible: choose $\mathcal{G}$-invariant complements $W_j$ with
 $V_{\le j}=V_{\le j-1}\oplus W_j$ and the corresponding $\mathcal{G}$-equivariant
-projections. Since $P_R$ commutes with $\mathcal{G}$ it preserves every $W_j$, and $q$
+projections. The lumped states are precisely the $\mathcal{G}$-orbits on $\mathcal{S}_R$,
+so functions on the class space are the $\mathcal{G}$-invariant functions on
+$\mathcal{S}_R$, and the Maschke splitting above restricts to this invariant
+part. Since $P_R$ commutes with $\mathcal{G}$ it preserves every $W_j$, and $q$
 is similar to $\bigoplus_j M_j$ with $M_j=P_R|_{W_j}$. On $W_1$ the induced
 operator is $B^\top\otimes\Xi_1$, with $\Xi_1$ a permutation representation
-of $\mathcal{G}$; by Schur's lemma $M_1$ is a direct sum of copies of $B^\top$ on the
+of $\mathcal{G}$; decomposing $\Xi_1$ into irreducibles $\rho$ of dimension
+$d_\rho$ and applying Schur's lemma gives
+$M_1\cong\bigoplus_\rho\bigl(B^\top\otimes I_{d_\rho}\bigr)$ on the
 $\mathcal{G}$-isotypic components. As $p_R$ is squarefree, $B^\top$ has $R$ distinct
 eigenvalues and is diagonalisable; hence $M_1$ is semisimple and every
 eigenvalue of modulus $\lambda_\star$ has trivial Jordan blocks. The $j\ge2$ layers
@@ -1264,7 +1287,7 @@ $d(R+s)=\tfrac12\|v_0(q-\Pi)^{s}\|_{1}$ with $\|v_0\|_1\le2$ gives the claim.
 The bound depends only on the $D_R$-dimensional matrix $q$.
 \end{proof}
 
-\noindent\textbf{Certificate (Table~\ref{tab:S3}).} For each chain, the
+\textbf{Certificate (Table~\ref{tab:S3}).} For each chain, the
 number of non-trivial eigenvalues of $q$ with modulus strictly above
 $\lambda_\star^2$ equals $R^2$ (the companion block with its multiplicity), and the
 largest modulus among all remaining eigenvalues equals $\lambda_\star^2$ exactly.
@@ -1349,7 +1372,7 @@ $\epsilon_{\mathrm{gel}}=\sqrt{\lambda_\star}-\lambda_\star$ is admissible becau
 $0<\sqrt{\lambda_\star}-\lambda_\star<1-\lambda_\star$ for $0<\lambda_\star<1$, and it makes the equality exact.
 \end{srem}
 
-\noindent\textbf{Non-uniformity of $C_{\mathrm{gel}}$.}
+\textbf{Non-uniformity of $C_{\mathrm{gel}}$.}
 Table~\ref{tab:S4} reports the lower bound
 $\sup_{1\le s\le120}\|\bar q^{s}\|_{1\to1}/(\sqrt{\lambda_\star})^{s}$, which grows
 with $N$ at fixed $R$. A bound on $C(q)$
@@ -1380,7 +1403,7 @@ Computed by exact dense iteration of the lumped chain in
 
 \end{table}
 
-\noindent\textbf{Three constants.} $C(q)=\sup_{s\ge1}d(R+s)/\lambda_\star^{s}$ is the
+\textbf{Three constants.} $C(q)=\sup_{s\ge1}d(R+s)/\lambda_\star^{s}$ is the
 tight prefactor of Theorem~5; $C_{\mathrm{spec}}(q)$ is the
 sum-of-projections quantity in equation~\eqref{eq:e45} and is a
 feasible upper bound on $C(q)$ once the full block diagonalisation is
@@ -1391,19 +1414,18 @@ available; $C_{\mathrm{gel}}$ is the Gelfand constant above and has no uniform b
 \label{sec:S5}
 % ---------------------------------------------------------------------
 
-After $R$ steps the law of the lumped chain is $\mu_R=\pi|_{\mathcal{R}}/\alpha_0$,
-where $\mathcal{R}$ is the $R$-step reachable set with $\pi(\mathcal{R})=\alpha_0$. Write
-$h_0=\alpha_0^{-1}\mathbf{1}\{\mathcal{R}\}$ and
+After $R$ steps the law of the lumped chain is $\mu_R=\pi|_{\mathcal{A}}/\alpha_0$,
+where $\mathcal{A}$ is the $R$-step reachable set with $\pi(\mathcal{A})=\alpha_0$. Write
+$h_0=\alpha_0^{-1}\mathbf{1}\{\mathcal{A}\}$ and
 $\chi^2_s=\|(q^{*})^{s}(h_0-1)\|_{L^2(\pi)}^{2}$, with $q^*$ the
 $\pi$-adjoint of $q$.
 
 \begin{sprop}[One-step Radon--Nikodym derivative]\label{prop:rho}
 Let $k_y$ count the retained initial labels in $y$, $t_y=m-R+k_y$, and let
 $\mathcal{B}$ be the set of states whose coordinate $r\ge2$ is either $0$ or an
-initial label $\ge r$, where $r$ is a coordinate index unrelated to the
-lumped transition matrix $q$. Then
+initial label $\ge r$. Then
 \begin{equation}\label{eq:S5-rho}
-\rho(y):=\sum_{x\in\mathcal{R}}\frac{\pi(x)q(x,y)}{\pi(y)}
+\rho(y):=\sum_{x\in\mathcal{A}}\frac{\pi(x)q(x,y)}{\pi(y)}
 =\frac{t_y}{m}\,\mathbf{1}\{y\in\mathcal{B}\},\qquad \mathbb E_{\pi}[\rho]=\alpha_0,
 \end{equation}
 and, with $T_j:=\sum_{y\in\mathcal{B}}(m)_{R-k_y+j}$,
@@ -1418,9 +1440,9 @@ $A_c=(1-1/m)^{R+1}+1/m<1$.
 \end{sprop}
 
 \begin{proof}
-At step $R$ the defining condition of $\mathcal{R}$ cannot hold with a nonzero last
-coordinate, so every $x\in\mathcal{R}$ has $x_R=0$. A predecessor of $y$ has the form
-$x=(y_2,\dots,y_R,x_R)$, and $x\in\mathcal{R}$ forces $x_R=0$; hence at most one
+At step $R$ the defining condition of $\mathcal{A}$ cannot hold with a nonzero last
+coordinate, so every $x\in\mathcal{A}$ has $x_R=0$. A predecessor of $y$ has the form
+$x=(y_2,\dots,y_R,x_R)$, and $x\in\mathcal{A}$ forces $x_R=0$; hence at most one
 predecessor contributes, which gives \eqref{eq:S5-rho} after cancelling
 $\pi(x)/\pi(y)$ against the transition probability. Using
 $t^{2}=(t)_2+t$ and collecting terms gives \eqref{eq:S5-Sj}. Both sides of
@@ -1437,7 +1459,7 @@ $s\ge1$, hence $\chi^2_1\le1/4$ implies $\tau_{\mathrm{mix}}\le R+1$. Solving th
 rational inequality gives the minimal admissible $m$ for each $R$;
 asymptotically $m\gtrsim2R^{2}$, i.e.\ $R\lesssim\sqrt{N/2}$.
 
-\noindent\textbf{Maximal coupling.} An independent bound avoids
+\textbf{Maximal coupling.} An independent bound avoids
 $\chi^2$ entirely. At each step, given windows $w,w'$, draw a single label
 from $\mathcal{C}(w)\cap\mathcal{C}(w')$ with probability $|\mathcal{C}(w)\cap\mathcal{C}(w')|/m$ and let the two
 chains draw independently from their complements otherwise. Since
@@ -1457,7 +1479,7 @@ size $2$, but the rank pairs are $(1,2),(2,3),(3,4)$ and never coincide.
 The bound above uses an explicit maximal coupling instead.
 \end{srem}
 
-\noindent\textbf{The case $R=2$.} Here $\lambda_\star=(N-2)^{-1/2}$ identically,
+\textbf{The case $R=2$.} Here $\lambda_\star=(N-2)^{-1/2}$ identically,
 $\tau_\star:=\lambda_\star^{2}=1/m$, and the generating function
 $F(z)=\sum_{s\ge0}\chi^2_s z^{s}=P_\chi(z)/Q_\chi(z)$ has four simple poles
 $\{z_1^{2},z_2^{2},\tau_\star,\tau_\star^{2}\}$, all of modulus $\le\tau_\star$. Writing
@@ -1517,11 +1539,11 @@ $\tau_{\mathrm{mix}}(R)=R+O(L(R,N))$ with an absolute constant on the whole aper
 range, because $\ln C_{\mathrm{unif}}$ is a constant multiple of $L(R,N)$.
 \end{sconj}
 
-\noindent The conjecture is open on the upper-bound side; the matching
+The conjecture is open on the upper-bound side; the matching
 lower bound $\tau_{\mathrm{mix}}\ge\max\{R,\lceil\ln2/|\ln\lambda_\star|\rceil\}$ is a theorem
 on the whole aperiodic range (Sections~S.2, S.6).
 
-\noindent\textbf{Failure of the chi-square analogue.} With
+\textbf{Failure of the chi-square analogue.} With
 $\alpha_0=m^R/(N)_R$ and $\chi^2_1=A_c\alpha_0^{-1}-1$, the ratio
 $\chi^2_1/\lambda_\star^{2}$ diverges in the tail regime. It equals
 $3.79\times10^{3}$, $1.22\times10^{5}$, $5.46\times10^{6}$ and
@@ -1557,7 +1579,7 @@ $(N,R)$ & prefactor & & $(N,R)$ & prefactor & \\
 
 \end{table}
 
-\noindent\textbf{Certificate inventories.} Table~\ref{tab:S7-inv}
+\textbf{Certificate inventories.} Table~\ref{tab:S7-inv}
 collects three disjoint sets of exact certificates. Since $C(q)$ is
 \emph{defined} by $C(q)=\sup_{s\ge1}d(R+s)/\lambda_\star^{s}$, \eqref{eq:e28} holds
 by construction; Tables~3--4 report the measured magnitude of $C(q)$ and its
@@ -1583,7 +1605,7 @@ computations; none is used as a theorem.}
 \label{tab:S7-inv}
 \end{table}
 
-\noindent\textbf{Unconditional bounds on the tail regime.} Four bounds are
+\textbf{Unconditional bounds on the tail regime.} Four bounds are
 available without the spectral-block identification of
 Section~\ref{sec:S3}: (i) the Gelfand bound \eqref{eq:S4-tau} with
 $C_{\mathrm{gel}}$ tabulated in Table~\ref{tab:S4}; (ii)
@@ -1600,30 +1622,13 @@ the roots of $p_R$, diagonalisability, the filtration or $\chi^2$. For $m=O(R)$ 
 $\tau_{\mathrm{mix}}\le2R$.
 
 % ---------------------------------------------------------------------
-\subsection{Reproducibility}
+\subsection{Symbols}
 \label{sec:S8}
 % ---------------------------------------------------------------------
 
-All checks are exact rational or deterministic dense linear algebra; no
-Monte Carlo supports any claim in this appendix. The scripts are
-self-contained, require Python~3.9+, \texttt{numpy}, \texttt{sympy}, and are
-run from the directory containing them:
-\begin{verbatim}
-cd supplementary/scripts
-python3 run_all.py          # all five checks; prints "ALL PASS"
-python3 check_algebra.py    # S.2, S.5, S.7 algebra
-python3 check_spectral.py   # S.2, S.3 certificates
-python3 check_gelfand.py    # S.4
-python3 check_chi2.py       # S.5 (Theorem 7, coupling, R=2)
-python3 check_certificates.py # S.7
-\end{verbatim}
-
-% ---------------------------------------------------------------------
-\subsection{Symbols}
-\label{sec:S9}
-% ---------------------------------------------------------------------
-
-\begin{tabular}{@{}lp{3.30in}@{}}
+\setlength{\LTleft}{0pt}
+\setlength{\LTright}{\fill}
+\begin{longtable}{@{}lp{3.30in}@{}}
 $N$, $R$, $[N]$, $(N)_R$ & clients; minimum separation; label set; falling factorial \\
 $s$, $m=N-R$, $s_0=2R$ & steps beyond the first $R$ rounds; complement size; least Doeblin step \\
 $P_R$, $\mathcal S_R$, $\zeta_R$ & window transition matrix; state space; stationary law \\
@@ -1636,14 +1641,10 @@ $B^\top$, $E_\lambda$, $C_{\mathrm{spec}}(q)$ & companion matrix; spectral proje
 $q$, $\pi$, $q^*$, $\bar q$, $\Pi$ & lumped transition; its stationary law; $\pi$-adjoint; $q-\Pi$; $\mathbf 1\pi^\top$ \\
 $v_0$, $C(q)$, $C_{\mathrm{gel}}$ & initial deviation; tight prefactor; Gelfand constant \\
 $K_{\mathrm{env}}$ & $\sup_s\chi^2_s/\lambda_\star^{2s}$, the chi-square envelope constant \\
-$D_R=\sum_k\binom Rk(R)_k$ & lumped state-space size; the partial sums of Section~5.2 are $\Delta_\ell$ \\
-\end{tabular}
-\smallskip
-
-\begin{tabular}{@{}lp{3.30in}@{}}
-$\alpha_0=m^R/(N)_R$, $\mathcal{R}$, $h_0$ & stationary mass $\pi(\mathcal{R})$ of the $R$-step reachable set; that set; its RN derivative \\
+$D_R=\sum_k\binom Rk(R)_k$ & lumped state-space size \\
+$\alpha_0=m^R/(N)_R$, $\mathcal{A}$, $h_0$ & mass $\pi(\mathcal{A})$; the $R$-step reachable set; normalised indicator $\alpha_0^{-1}\mathbf{1}\{\mathcal{A}\}$ \\
 $A_c=(1-1/m)^{R+1}+1/m$, $\chi^2_s$ & one-step contraction factor; $\|(q^*)^s(h_0-1)\|_{L^2(\pi)}^2$ \\
-$\rho(y)$, $T_j$, $\mathcal{B}$ & one-step RN derivative; its partition sum; the state set of Proposition~\ref{prop:rho} \\
+$\rho(y)$, $T_j$, $\mathcal{B}$, $r$ & one-step RN derivative; partition sum; state set and coordinate index of Proposition~\ref{prop:rho} \\
 $\mathcal{C}(w)$ & admissible complement $[N]\setminus\{w_1,\dots,w_R\}$ of window $w$ \\
 $\beta$, $p_{\min}$ & Doeblin coefficient of Appendix~A; smallest propensity \\
 $K$, $M=N/K$, $g_t(i)$ & clients per round; effective population; participation indicator \\
@@ -1653,7 +1654,7 @@ $e_k(p)$, $Z_R$, $Z$ & elementary symmetric polynomial; general-$R$ normaliser; 
 $\varphi$, $\varphi_{f,\xi}$, $V_{\le j}$, $W_j$ & complex eigenfunction; its product form; spectral filtration; $\mathcal{G}$-invariant complement \\
 $\gamma$, $\gamma_{\mathrm{cpl}}$ & idle-round probability; maximal-coupling block success $(1-R/m)^R$ \\
 $\epsilon$, $\epsilon_{\mathrm{prop}}$, $\epsilon_{\mathrm{gel}}$ & mixing accuracy; small-propensity parameter; Gelfand slack \\
-\end{tabular}
+\end{longtable}
 
 \bibliography{refs}
 \end{document}

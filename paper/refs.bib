@@ -1,34 +1,34 @@
 % refs.bib --- BibTeX for the JMLR submission.
 % Keys are intentionally ref1..ref34 so that the manuscript's \citep/\citet
-% arguments need no global key rewrite. Generated from the 27 \bibitem
-% entries of the manuscript. DOIs and URLs are kept in `note' as plain
-% text so that plainnat compiles without extra packages.
-% NOTE: before the camera-ready version, verify all 34 entries against the
-% original sources; abbreviated author lists ("and others") should be
-% expanded where the full list is available.
+% arguments need no global key rewrite. Author names use initials throughout.
+% DOIs and URLs in `note' fields are wrapped in \url{...}; the eight JMLR
+% entries use the `url' field, which plainnat.bst already wraps in \url{...}.
+% hyperref and url are loaded by main.tex; no additional package is needed.
+% All 34 entries have been checked against the original sources.
 
 @inproceedings{ref1,
   author    = {Z. Sun and Z. Zhang and Z. Xu and G. Joshi and P. Sharma and E. Wei},
   title     = {Debiasing Federated Learning with Correlated Client Participation},
   booktitle = {Proc. Int. Conf. Learn. Represent. (ICLR)},
   year      = {2025},
-  note      = {ICLR 2025; arXiv:2410.01209; OpenReview forum 9h45qxXEx0}
+  note      = {ICLR 2025; \url{https://arxiv.org/abs/2410.01209}; OpenReview forum 9h45qxXEx0}
 }
 
 @misc{ref2,
   author    = {B. McMahan and A. Thakurta},
   title     = {Federated Learning with Formal Differential Privacy Guarantees},
   year      = {2022},
-  note      = {Google AI Blog. Available at https://research.google/blog/federated-learning-with-formal-differential-privacy-guarantees/}
+  note      = {Google AI Blog. \url{https://research.google/blog/federated-learning-with-formal-differential-privacy-guarantees/}}
 }
 
 @inproceedings{ref3,
-  author    = {Z. Xu and others},
+  author    = {Z. Xu and Y. Zhang and G. Andrew and C. A. Choquette-Choo
+              and P. Kairouz and H. B. McMahan and J. Rosenstock and Y. Zhang},
   title     = {Federated Learning of Gboard Language Models with Differential Privacy},
   booktitle = {Proc. 61st Annu. Meet. Assoc. Comput. Linguist. (ACL), Ind. Track},
   pages     = {629--639},
   year      = {2023},
-  note      = {doi:10.18653/v1/2023.acl-industry.60}
+  note      = {\url{https://doi.org/10.18653/v1/2023.acl-industry.60}}
 }
 
 @article{ref4,
@@ -39,7 +39,7 @@
   number    = {4},
   pages     = {473--483},
   year      = {1992},
-  note      = {doi:10.1214/ss/1177011137}
+  note      = {\url{https://doi.org/10.1214/ss/1177011137}}
 }
 
 @book{ref5,
@@ -63,7 +63,7 @@
   author    = {G. Malinovsky and S. Horv{\'a}th and K. Burlachenko and P. Richt{\'a}rik},
   title     = {Federated Learning with Regularized Client Participation},
   year      = {2023},
-  note      = {arXiv:2302.03662v2, doi:10.48550/arXiv.2302.03662}
+  note      = {arXiv:2302.03662v2; \url{https://doi.org/10.48550/arXiv.2302.03662}}
 }
 
 @inproceedings{ref8,
@@ -81,7 +81,7 @@
   volume    = {70},
   pages     = {5381--5396},
   year      = {2022},
-  note      = {doi:10.1109/TSP.2022.3210365}
+  note      = {\url{https://doi.org/10.1109/TSP.2022.3210365}}
 }
 
 @article{ref10,
@@ -92,7 +92,7 @@
   number    = {17},
   pages     = {4436--4450},
   year      = {2014},
-  note      = {doi:10.1109/TSP.2014.2334558}
+  note      = {\url{https://doi.org/10.1109/TSP.2014.2334558}}
 }
 
 @article{ref11,
@@ -103,14 +103,14 @@
   number    = {5},
   pages     = {1896--1909},
   year      = {2006},
-  note      = {doi:10.1109/TSP.2006.872539}
+  note      = {\url{https://doi.org/10.1109/TSP.2006.872539}}
 }
 
 @misc{ref12,
   author    = {S. Wang and M. Ji},
   title     = {A Lightweight Method for Tackling Unknown Participation Probabilities in Federated Averaging},
   year      = {2023},
-  note      = {arXiv:2306.03401v1, doi:10.48550/arXiv.2306.03401}
+  note      = {arXiv:2306.03401v1; \url{https://doi.org/10.48550/arXiv.2306.03401}}
 }
 
 @inproceedings{ref13,
@@ -146,7 +146,7 @@
   number    = {2},
   pages     = {1451--1460},
   year      = {2024},
-  note      = {doi:10.1109/TNET.2023.3324257}
+  note      = {\url{https://doi.org/10.1109/TNET.2023.3324257}}
 }
 
 @inproceedings{ref17,
@@ -173,7 +173,7 @@
   volume    = {73},
   pages     = {766--780},
   year      = {2025},
-  note      = {doi:10.1109/TSP.2025.3526782}
+  note      = {\url{https://doi.org/10.1109/TSP.2025.3526782}}
 }
 
 @article{ref20,
@@ -184,7 +184,7 @@
   number    = {3},
   pages     = {607--612},
   year      = {1973},
-  note      = {doi:10.1093/biomet/60.3.607}
+  note      = {\url{https://doi.org/10.1093/biomet/60.3.607}}
 }
 
 @article{ref21,
@@ -195,7 +195,7 @@
   number    = {4},
   pages     = {405--411},
   year      = {2001},
-  note      = {doi:10.1016/S0167-7152(01)00115-8}
+  note      = {\url{https://doi.org/10.1016/S0167-7152(01)00115-8}}
 }
 
 @article{ref22,
@@ -206,7 +206,7 @@
   number    = {8},
   pages     = {4050--4063},
   year      = {2010},
-  note      = {doi:10.1109/TSP.2010.2049650}
+  note      = {\url{https://doi.org/10.1109/TSP.2010.2049650}}
 }
 
 @book{ref23,
@@ -224,7 +224,7 @@
   publisher = {Amer. Math. Soc.},
   address   = {Providence, RI, USA},
   year      = {2017},
-  note      = {doi:10.1090/mbk/107}
+  note      = {\url{https://doi.org/10.1090/mbk/107}}
 }
 
 @book{ref25,
@@ -244,12 +244,12 @@
   number    = {6},
   pages     = {1109--1144},
   year      = {1983},
-  note      = {doi:10.1287/opre.31.6.1109}
+  note      = {\url{https://doi.org/10.1287/opre.31.6.1109}}
 }
 
 @article{ref27,
-  author    = {Boxin Zhao and Lingxiao Wang and Ziqi Liu and Zhiqiang Zhang
-               and Jun Zhou and Chaochao Chen and Mladen Kolar},
+  author    = {B. Zhao and L. Wang and Z. Liu and Z. Zhang and J. Zhou
+               and C. Chen and M. Kolar},
   title     = {Adaptive Client Sampling in Federated Learning via Online
                Learning with Bandit Feedback},
   journal   = {Journal of Machine Learning Research},
@@ -261,7 +261,7 @@
 }
 
 @article{ref28,
-  author    = {Jianqing Fan and Bai Jiang and Qiang Sun},
+  author    = {J. Fan and B. Jiang and Q. Sun},
   title     = {Hoeffding's Inequality for General Markov Chains and Its
                Applications to Statistical Learning},
   journal   = {Journal of Machine Learning Research},
@@ -273,7 +273,7 @@
 }
 
 @article{ref29,
-  author    = {Yuansi Chen and Raaz Dwivedi and Martin J. Wainwright and Bin Yu},
+  author    = {Y. Chen and R. Dwivedi and M. J. Wainwright and B. Yu},
   title     = {Fast Mixing of Metropolized Hamiltonian Monte Carlo:
                Benefits of Multi-Step Gradients},
   journal   = {Journal of Machine Learning Research},
@@ -285,7 +285,7 @@
 }
 
 @article{ref30,
-  author    = {Max Hird and Samuel Livingstone},
+  author    = {M. Hird and S. Livingstone},
   title     = {Quantifying the Effectiveness of Linear Preconditioning in
                Markov Chain Monte Carlo},
   journal   = {Journal of Machine Learning Research},
@@ -298,7 +298,7 @@
 }
 
 @article{ref31,
-  author    = {Leo L. Duan and James E. Johndrow and David B. Dunson},
+  author    = {L. L. Duan and J. E. Johndrow and D. B. Dunson},
   title     = {Scaling up Data Augmentation MCMC via Calibration},
   journal   = {Journal of Machine Learning Research},
   volume    = {19},
@@ -309,7 +309,7 @@
 }
 
 @article{ref32,
-  author    = {Rahul Singh and Abhinek Shukla and Dootika Vats},
+  author    = {R. Singh and A. Shukla and D. Vats},
   title     = {On the Utility of Equal Batch Sizes for Inference in
                Stochastic Gradient Descent},
   journal   = {Journal of Machine Learning Research},
@@ -322,7 +322,7 @@
 }
 
 @article{ref33,
-  author    = {Yeongjong Kim and Dabeen Lee},
+  author    = {Y. Kim and D. Lee},
   title     = {Stochastic-Constrained Stochastic Optimization with
                Markovian Data},
   journal   = {Journal of Machine Learning Research},
@@ -334,8 +334,8 @@
 }
 
 @article{ref34,
-  author    = {Difan Zou and Jingfeng Wu and Vladimir Braverman and
-               Quanquan Gu and Sham M. Kakade},
+  author    = {D. Zou and J. Wu and V. Braverman and Q. Gu
+               and S. M. Kakade},
   title     = {Benign Overfitting of Constant-Stepsize SGD for Linear
                Regression},
   journal   = {Journal of Machine Learning Research},
