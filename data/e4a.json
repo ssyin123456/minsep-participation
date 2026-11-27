@@ -1,0 +1,155 @@
+{
+ "config": {
+  "seed": 20261120,
+  "profiles_per_setting": 20000,
+  "generated": "2026-11-20"
+ },
+ "poisson_check": {
+  "max_abs_error": 5.551115123125783e-16,
+  "profiles_checked": 36
+ },
+ "prop1_profile": {
+  "p": [
+   0.01,
+   0.96,
+   0.01,
+   0.01,
+   0.01
+  ],
+  "s0": 0.07800000000000007,
+  "s1": 0.37796040054619984
+ },
+ "longtail_N100": {
+  "s0": 0.7935390988136769,
+  "s1": 0.6601520702984178
+ },
+ "dirichlet": {
+  "N5_a0.1": {
+   "N": 5,
+   "alpha": 0.1,
+   "profiles": 20000,
+   "violation_rate": 0.2822,
+   "mean_ratio": 9259.836570231544
+  },
+  "N5_a0.2": {
+   "N": 5,
+   "alpha": 0.2,
+   "profiles": 20000,
+   "violation_rate": 0.17105,
+   "mean_ratio": 5.317109116116632
+  },
+  "N5_a0.3": {
+   "N": 5,
+   "alpha": 0.3,
+   "profiles": 20000,
+   "violation_rate": 0.11005,
+   "mean_ratio": 1.1312003926021235
+  },
+  "N5_a0.5": {
+   "N": 5,
+   "alpha": 0.5,
+   "profiles": 20000,
+   "violation_rate": 0.042,
+   "mean_ratio": 0.5624412240503718
+  },
+  "N5_a1.0": {
+   "N": 5,
+   "alpha": 1.0,
+   "profiles": 20000,
+   "violation_rate": 0.0056,
+   "mean_ratio": 0.553694306391044
+  },
+  "N5_a2.0": {
+   "N": 5,
+   "alpha": 2.0,
+   "profiles": 20000,
+   "violation_rate": 0.0001,
+   "mean_ratio": 0.5705035655663004
+  },
+  "N20_a0.1": {
+   "N": 20,
+   "alpha": 0.1,
+   "profiles": 20000,
+   "violation_rate": 0.06075,
+   "mean_ratio": 0.6956660463350443
+  },
+  "N20_a0.2": {
+   "N": 20,
+   "alpha": 0.2,
+   "profiles": 20000,
+   "violation_rate": 0.0104,
+   "mean_ratio": 0.7144353169018306
+  },
+  "N20_a0.3": {
+   "N": 20,
+   "alpha": 0.3,
+   "profiles": 20000,
+   "violation_rate": 0.00225,
+   "mean_ratio": 0.7490510201791118
+  },
+  "N20_a0.5": {
+   "N": 20,
+   "alpha": 0.5,
+   "profiles": 20000,
+   "violation_rate": 0.0001,
+   "mean_ratio": 0.7921380235353163
+  },
+  "N20_a1.0": {
+   "N": 20,
+   "alpha": 1.0,
+   "profiles": 20000,
+   "violation_rate": 0.0,
+   "mean_ratio": 0.8370537061095472
+  },
+  "N20_a2.0": {
+   "N": 20,
+   "alpha": 2.0,
+   "profiles": 20000,
+   "violation_rate": 0.0,
+   "mean_ratio": 0.8656597106330192
+  },
+  "N100_a0.1": {
+   "N": 100,
+   "alpha": 0.1,
+   "profiles": 20000,
+   "violation_rate": 0.0,
+   "mean_ratio": 0.8484136806610797
+  },
+  "N100_a0.2": {
+   "N": 100,
+   "alpha": 0.2,
+   "profiles": 20000,
+   "violation_rate": 0.0,
+   "mean_ratio": 0.9027009782794239
+  },
+  "N100_a0.3": {
+   "N": 100,
+   "alpha": 0.3,
+   "profiles": 20000,
+   "violation_rate": 0.0,
+   "mean_ratio": 0.925100337117228
+  },
+  "N100_a0.5": {
+   "N": 100,
+   "alpha": 0.5,
+   "profiles": 20000,
+   "violation_rate": 0.0,
+   "mean_ratio": 0.9453130335147698
+  },
+  "N100_a1.0": {
+   "N": 100,
+   "alpha": 1.0,
+   "profiles": 20000,
+   "violation_rate": 0.0,
+   "mean_ratio": 0.9618772727965575
+  },
+  "N100_a2.0": {
+   "N": 100,
+   "alpha": 2.0,
+   "profiles": 20000,
+   "violation_rate": 0.0,
+   "mean_ratio": 0.9707253389701016
+  }
+ },
+ "note": "The violation rate depends strongly on the Dirichlet concentration alpha; report the measured value, not a universal '16%'. Only the R=0 -> R=1 transition is tested."
+}

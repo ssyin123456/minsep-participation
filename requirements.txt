@@ -1,0 +1,13 @@
+# Core (all CPU scripts, Figs. 1-8, verification)
+numpy>=1.24
+scipy>=1.10
+matplotlib>=3.7
+pyyaml>=6.0
+mpmath>=1.3
+
+# Optional: GPU acceleration for experiments/ (E4/E5). The CIFAR-10
+# label loader needs only numpy; torchvision is not required. Without torch the code falls back to numpy on CPU, which is
+# intended for smoke tests only. Install the wheel matching your CUDA, e.g.
+#   pip install torch --index-url https://download.pytorch.org/whl/cu121
+# torch>=2.0
+# torchvision>=0.15

@@ -1,0 +1,26 @@
+cff-version: 1.2.0
+message: "If you use this package, please cite the accompanying manuscript."
+type: software
+title: "Reproducibility package for Minimum-Separation Client Participation: Mixing Time and Sampling Variance"
+abstract: "Code, data and figures for the mixing-time and sampling-variance analysis of minimum-separation client participation in federated learning."
+authors:
+  - family-names: Yin
+    given-names: Shishu
+    orcid: "https://orcid.org/0000-0002-4484-2379"
+    affiliation: "Anhui University of Finance and Economics, Bengbu, China"
+year: 2026
+license: MIT
+keywords:
+  - federated learning
+  - Markov chain
+  - mixing time
+  - asymptotic variance
+  - client sampling
+preferred-citation:
+  type: article
+  title: "On the Mixing Time and the Sampling Variance of Minimum-Separation Client Participation in Federated Learning"
+  authors:
+    - family-names: Yin
+      given-names: Shishu
+  year: 2026
+  status: in-preparation

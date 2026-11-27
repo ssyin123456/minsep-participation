@@ -1,0 +1,31 @@
+# configs/e4.yaml --- offline GPU run for E4 (bootstrap confidence intervals)
+seed: 20261120
+
+e4a:
+  # Fig. 2(b): quadratic estimation error, Sec. 6.2
+  N: 20
+  R: [0, 1, 2, 4, 8, 12, 16]
+  eta: 0.04
+  d: 5
+  T: 1200
+  checkpoints: [11, 20, 40, 1200]
+  trajectories: 100000
+  bootstrap_B: 2000
+
+e4b:
+  # Fig. 4: aggregate asymptotic variance, Sec. 6.3
+  N: 100
+  R: [0, 1, 2, 5, 10, 20]
+  exponent: 1.5          # p_i proportional to i^-1.5
+  T: 3000
+  burn_in: 600
+  checkpoints: [1500, 2000, 2500, 3000]
+  trajectories: 100000   # must be divisible by `groups`
+  groups: 100            # 100 independent groups x 1000 trajectories
+  bootstrap_B: 2000
+
+# Expected wall time on one A100 / 4090:
+#   E4-A ~ 2-8 min, E4-B ~ 15-45 min (dominated by T=3600 steps at N=100).
+# If GPU memory is tight, lower `trajectories` to 50000 (still >=40x the
+# original 1200) and keep groups=100 -> 500 trajectories per group.
+# `bootstrap_B` and `groups` are cheap; do not reduce them.

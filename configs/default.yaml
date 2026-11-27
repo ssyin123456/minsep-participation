@@ -1,0 +1,55 @@
+# configs/default.yaml --- fixed reproduction configuration
+# All E1/E2/E3 scripts read this file. Seed is fixed; no randomness in E1/E3.
+seed: 20261120
+generated: "2026-11-22"
+
+chain:
+  tv_accuracy: 0.25          # tau_mix = t_mix(1/4), as in [1, Def. 4]
+  t_max: 400
+  tol: 1.0e-12
+
+e1_prefactor:
+  N10_R: [1,2,3,4,5,6,7,8]        # exact; lump R<=7, direct P_R for R=8
+  # Exact tau_mix at N=100 is feasible only for R<=7: both (N)_R and the
+  # identity-tracking lump D_R = sum_k C(R,k)(R)_k grow too fast beyond that.
+  N100_R_exact: [1,2,3,4,5,6,7]
+  N100_R_bounds: [8,10,12,15,20,30,40,50,60,70,80,88]
+  output: [data/e1.json, figs/fig5.jpg]
+
+e2_stepsize:
+  N: 100
+  T: 1200
+  K: 20
+  mc_N: 20
+  mc_trajectories: 1000
+  mc_T: 1500
+  mc_R: [0,4,8,16]
+  output: [data/e2.json, figs/fig6.jpg]
+
+e3_etascan:
+  N: 20
+  R: [0,4,8,16]
+  eta_scan: [0.04,0.02,0.01,0.005,0.001]
+  series_terms: 8000
+  target_ratio: 0.168944        # N=20, R=16, eta=0.04
+  output: [data/e3.json, figs/fig7.jpg]
+
+e4a_dirichlet:
+  poisson_check_profiles: 36
+  profiles_per_setting: 20000
+  N_grid: [5,20,100]
+  alpha_grid: [0.1,0.2,0.3,0.5,1.0,2.0]
+  series_terms_note: "exact N-state Poisson solve, no truncation"
+  output: [data/e4a.json]
+  status: done
+
+# Large-compute experiments (completed; see experiments/).
+e4_bootstrap:
+  trajectories: 100000
+  bootstrap_B: 2000
+  dirichlet_profiles: 20000
+  status: done
+e5_realdata:
+  dataset: CIFAR10_DIRICHLET
+  trajectories: 20000
+  status: done

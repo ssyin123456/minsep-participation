@@ -1,0 +1,44 @@
+# configs/e5.yaml --- E5 optional real-data sanity check (1 GPU-day cap)
+seed: 20261120
+mode: participation          # or "fedavg" (skeleton only, no accuracy logged)
+
+dataset: cifar10             # "cifar10" | "femnist"
+data_dir: ./data             # torchvision caches cifar-10-batches-py/ here
+download: false              # CIFAR-10 pre-placed at ./data/cifar-10-batches-py/
+                             # Keep false: no network access at run time.
+                             # Verify the layout before running:
+                             #   python verify_cifar10.py   -> must print === READY ===
+
+# ONLY ds.targets (labels) is used; no image tensor is loaded, no training.
+# Default source https://www.cs.toronto.edu/~kriz/cifar-10-python.tar.gz
+# is ~170,498,071 bytes (MD5 c58f30108f718f92721af3b95e74349a) but has been
+# throttled to ~55 kB/s since mid-2026. Uncomment a mirror to avoid a 50-min wait:
+# cifar10_url: https://data.brainchip.com/dataset-mirror/cifar10/cifar-10-python.tar.gz
+# cifar10_url: https://huggingface.co/datasets/MIT-OL-AI-D/cifar-10-python/resolve/main/cifar-10-python.tar.gz
+#
+# ZERO-DOWNLOAD alternative: pass --sizes-file my_sizes.npy with a (100,)
+# int array of REAL client sample counts (from any real dataset you already
+# have). The script then skips dataset I/O entirely. Never fabricate sizes:
+# that would make this a synthetic run, not a real-data check.
+dirichlet_alpha: 0.5
+leaf_dir: ./data/femnist     # only used for dataset: femnist
+N: 100
+p_mode: proportional         # p_i proportional to client sample count
+                             # (set "uniform_from_real_sizes" for a control)
+
+R: [0, 5, 10, 20]
+T: 2000
+burn_in: 600
+checkpoints: [1000, 1500, 1800, 2000]
+trajectories: 20000          # divisible by `groups`
+groups: 100                  # 100 x 200 independent trajectories
+bootstrap_B: 2000
+
+# optional FedAvg skeleton (NOT part of any claim, logs participation only)
+fedavg_R: 10
+fedavg_T: 1000
+fedavg_K: 5
+
+# If CIFAR-10 cannot be downloaded (no network), the script falls back to a
+# SYNTHETIC diurnal trace and clearly labels it -- in that case E5 should be
+# DROPPED rather than presented as a real-data check. E1--E4 are sufficient.
